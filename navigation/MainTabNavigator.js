@@ -14,6 +14,7 @@ import {
   Text
 } from 'native-base';
 import HomeScreen from '../screens/HomeScreen';
+import Journal from '../screens/Journal';
 
 
 const HomeStack = createStackNavigator({
@@ -21,14 +22,14 @@ const HomeStack = createStackNavigator({
 });
 
 
-const LinksStack = createStackNavigator({
-  Links: HomeScreen
+const JournalsStack = createStackNavigator({
+  Journal: Journal
 });
 
 
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack
+  JournalsStack
 },
 {
   tabBarComponent: props => (
@@ -37,7 +38,7 @@ export default createBottomTabNavigator({
         <Button
           vertical
           // active={props.navigationState.index === 0}
-          onPress={() => props.navigation.navigate('LucyChat')}
+          onPress={() => props.navigation.navigate('Home')}
         >
           <Icon name="md-home" />
           <Text>Home</Text>
@@ -46,7 +47,7 @@ export default createBottomTabNavigator({
         <Button
           vertical
           // active={props.navigationState.index === 1}
-          onPress={() => props.navigation.navigate('JadeChat')}
+          onPress={() => props.navigation.navigate('Journal')}
         >
           <Icon name="paper" />
           <Text>Journal</Text>

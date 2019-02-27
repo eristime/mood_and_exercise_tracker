@@ -34,7 +34,7 @@ const BarChart = (props) => {
     <View style={{ flex: 1 }}>
       <View style={styles.titleContainer}>
         <Icon name="arrow-dropleft" />
-        <H2>February</H2>
+        <H2>{props.title}</H2>
         <Icon name="arrow-dropright" />
       </View>
 
@@ -44,48 +44,10 @@ const BarChart = (props) => {
       >
         <VictoryGroup>
           <VictoryLine
-            data={[
-              {
-                x: 15, y: 20
-              },
-              {
-                x: 25, y: 30
-              },
-              {
-                x: 35, y: 65
-              },
-              {
-                x: 40, y: 50
-              },
-              {
-                x: 45, y: 40
-              },
-              {
-                x: 50, y: 30
-              }
-            ]}
+            data={props.data1}
           />
           <VictoryLine
-            data={[
-              {
-                x: 2, y: 3
-              },
-              {
-                x: 4, y: 5
-              },
-              {
-                x: 10, y: 20
-              },
-              {
-                x: 33, y: 22
-              },
-              {
-                x: 45, y: 40
-              },
-              {
-                x: 50, y: 30
-              }
-            ]}
+            data={props.data2}
           />
         </VictoryGroup>
       </VictoryChart>

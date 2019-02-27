@@ -9,25 +9,16 @@ import {
 } from 'react-native';
 
 import {
-  Button,
   Container,
-  CheckBox,
   Header,
-  Title,
   Content,
-  Icon,
-  Right,
-  Body,
   Tab,
   Tabs,
-  Fab,
-  TabHeading,
-  ListItem,
-  Text,
+  Text
 } from 'native-base';
-import ActionButton from 'react-native-action-button';
 import BarChartContainer from '../components/BarChartContainer';
 import ChartOption from '../components/ChartOption';
+import Fab from '../components/Fab';
 
 
 export default class HomeScreen extends React.Component {
@@ -65,15 +56,8 @@ export default class HomeScreen extends React.Component {
           <ChartOption text="Activity" color="green" />
           <ChartOption text="Happiness" color="red" />
         </Content>
+        <Fab />
 
-        <ActionButton buttonColor="rgba(231,76,60,1)" style={styles.fabButton}>
-          <ActionButton.Item buttonColor='#9b59b6' title="Add a reminder" onPress={() => console.log("notes tapped!")}>
-            <Icon name="time" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-          <ActionButton.Item buttonColor='#3498db' title="Rate your day" onPress={() => {}}>
-            <Icon name="body" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-        </ActionButton>
       </Container>
     );
   }

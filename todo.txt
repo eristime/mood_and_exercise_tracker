@@ -1,0 +1,6 @@
+- add mood
+- list detail item
+- info buttons
+- add reminder
+- add mood
+- date formatting: today, yesterday

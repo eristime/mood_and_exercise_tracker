@@ -6,15 +6,13 @@
 import React from 'react';
 import {
   View,
+  StyleSheet
 } from 'react-native';
 import {
-  Left,
-  Right,
   CheckBox,
   ListItem,
   Text,
   Body,
-  H2,
   Icon
 } from 'native-base';
 import { withNavigation } from 'react-navigation';
@@ -26,7 +24,7 @@ const ChartOption = (props) => {
     <ListItem>
       <CheckBox checked={checked} color={props.color} />
       <Body>
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+        <View style={styles.itemContainer}>
           <Text style={{ width: 80 }}>{ props.text }</Text>
           <View>
             <View
@@ -45,5 +43,15 @@ const ChartOption = (props) => {
     </ListItem>
   );
 };
+
+const styles = StyleSheet.create({
+  itemContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  }
+});
+
 
 export default withNavigation(ChartOption);

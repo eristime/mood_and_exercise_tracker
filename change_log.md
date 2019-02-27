@@ -1,0 +1,2 @@
+- Journal main screen (still header bug)
+- fab structured better
