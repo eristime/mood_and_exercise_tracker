@@ -1,4 +1,3 @@
-- list detail item
 - choose mood input
 - mood input camera view
 - alerts
