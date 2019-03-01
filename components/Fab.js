@@ -20,10 +20,18 @@ const Fab = (props) => {
 
   return (
     <ActionButton buttonColor="rgba(231,76,60,1)" style={styles.fabButton}>
-      <ActionButton.Item buttonColor="#9b59b6" title="Add a reminder" onPress={() => console.log("notes tapped!")}>
+      <ActionButton.Item 
+        buttonColor="#9b59b6" 
+        title="Add a reminder" 
+        onPress={() => props.navigation.navigate('Home')}
+      >
         <Icon name="md-time" style={styles.actionButtonIcon} />
       </ActionButton.Item>
-      <ActionButton.Item buttonColor="#3498db" title="Rate your day" onPress={() => {}}>
+      <ActionButton.Item
+        buttonColor="#3498db"
+        title="Rate your day"
+        onPress={() => props.navigation.navigate('AddMood')}
+      >
         <Icon name="md-body" style={styles.actionButtonIcon} />
       </ActionButton.Item>
     </ActionButton>

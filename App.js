@@ -1,8 +1,20 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-multiple-empty-lines */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable semi */
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, ToastAndroid } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import { Root } from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
+
+// export default App =>
+//   <Root>
+//     <Applet />
+//   </Root>;
+
 
 export default class App extends React.Component {
   state = {
@@ -22,7 +34,7 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
+            <AppNavigator />
         </View>
       );
     }

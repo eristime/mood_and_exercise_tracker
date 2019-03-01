@@ -4,10 +4,6 @@
 /* eslint-disable semi */
 /* eslint-disable no-unused-vars */
 
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable semi */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   View,
@@ -27,7 +23,10 @@ import Fab from '../components/Fab';
 import Journaltem from '../components/Journaltem';
 
 
-export default class HomeScreen extends React.Component {
+export default class JournalScreen extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
 
   constructor (props) {
     super(props);

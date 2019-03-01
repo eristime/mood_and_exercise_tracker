@@ -14,7 +14,8 @@ import {
   Text
 } from 'native-base';
 import HomeScreen from '../screens/HomeScreen';
-import Journal from '../screens/Journal';
+import JournalScreen from '../screens/Journal';
+import AddMoodScreen from '../screens/AddMoodScreen';
 
 
 const HomeStack = createStackNavigator({
@@ -23,7 +24,7 @@ const HomeStack = createStackNavigator({
 
 
 const JournalsStack = createStackNavigator({
-  Journal: Journal
+  Journal: JournalScreen
 });
 
 
@@ -40,7 +41,7 @@ export default createBottomTabNavigator({
           // active={props.navigationState.index === 0}
           onPress={() => props.navigation.navigate('Home')}
         >
-          <Icon name="md-home" />
+          <Icon name="home" />
           <Text>Home</Text>
         </Button>
 

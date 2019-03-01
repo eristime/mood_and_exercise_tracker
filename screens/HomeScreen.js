@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable semi */
 /* eslint-disable no-unused-vars */
+/* eslint-disable linebreak-style */
 import React from 'react';
 import {
   View,
@@ -56,7 +57,7 @@ export default class HomeScreen extends React.Component {
           <ChartOption text="Activity" color="green" />
           <ChartOption text="Happiness" color="red" />
         </Content>
-        <Fab />
+        {/* <Fab /> */}
 
       </Container>
     );

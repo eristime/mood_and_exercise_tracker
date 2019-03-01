@@ -1,6 +1,6 @@
-- add mood
 - list detail item
 - info buttons
 - add reminder
-- add mood
+- choose mood input
+- mood input camera view
 - date formatting: today, yesterday
