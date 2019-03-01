@@ -16,16 +16,44 @@ import {
 import HomeScreen from '../screens/HomeScreen';
 import JournalScreen from '../screens/Journal';
 import AddMoodScreen from '../screens/AddMoodScreen';
+import AddReminderScreen from '../screens/AddReminderScreen';
 
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen
+  Home: HomeScreen,
+  AddMood: AddMoodScreen,
+  AddReminder: AddReminderScreen
 });
 
 
 const JournalsStack = createStackNavigator({
-  Journal: JournalScreen
+  Journal: JournalScreen,
+  AddMood: AddMoodScreen,
+  AddReminder: AddReminderScreen
 });
+
+// show tabBar only in Home and Journal Screens
+HomeStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible,
+  };
+};
+
+JournalsStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible,
+  };
+};
 
 
 export default createBottomTabNavigator({

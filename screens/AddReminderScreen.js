@@ -25,10 +25,9 @@ import {
   Textarea,
   Form
 } from 'native-base';
-import CustomSlider from '../components/Slider'
 
 
-export default class AddMoodScreen extends React.Component {
+export default class AddReminderScreen extends React.Component {
 
   static navigationOptions = {
     header: null
@@ -40,7 +39,6 @@ export default class AddMoodScreen extends React.Component {
     };
   }
 
-
   render () {
     return (
       <Container style={{ flex: 1 }}>
@@ -51,45 +49,16 @@ export default class AddMoodScreen extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>Rate your day</Title>
+            <Title>Add a reminder</Title>
           </Body>
         </Header>
         <Content style={styles.mainContainer}>
           <Form>
             <H1 style={styles.itemContainer}>How are you feeling today?</H1>
 
-            <View style={styles.itemContainer}>
-              <CustomSlider
-                text="Happiness"
-                minText="Sad"
-                maxText="Happy"
-                minValue={1}
-                maxValue={5}
-                infoText="Happiness is being happyy."
-              />
-            </View>
-
-            <View style={styles.itemContainer}>
-              <CustomSlider
-                text="Activiness"
-                minText="Passive"
-                maxText="Active"
-                minValue={1}
-                maxValue={5}
-                infoText="Activiness describes how active you felt during the day."
-              />
-            </View>
 
             <H3 style={styles.itemContainer}>Describe your day in words:</H3>
-            <View style={styles.itemContainer}>
 
-              <Textarea
-                style={{ alignSelf: 'stretch' }}
-                rowSpan={4}
-                bordered
-                placeholder="Add a note"
-              />
-            </View>
 
           </Form>
           <View style={[styles.itemContainer, styles.bottomItem]}>

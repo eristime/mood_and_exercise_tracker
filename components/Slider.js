@@ -7,111 +7,56 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
-  Toast,
-  Slider,
-  ToastAndroid
+  Slider
 } from 'react-native';
-
 import {
-  Button,
   Text,
-  Icon,
-  H2,
-  H3
+  H2
 } from 'native-base';
-import { withNavigation } from 'react-navigation';
-import Modal from 'react-native-modal';
+import InfoModal from './InfoModal';
 
-/*
+
 export default class CustomSlider extends React.Component {
   state = {
     isModalVisible: false,
   };
 
-  _toggleModal = () =>
+  _toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
-
-  render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <TouchableOpacity onPress={this._toggleModal}>
-          <Text>Show Modal</Text>
-        </TouchableOpacity>
-        <Modal
-          style={styles.bottomModal}
-          isVisible={this.state.isModalVisible}
-          onBackdropPress={this._toggleModal}
-        >
-          <View style={{ flex: 1, }}>
-            <View style={{ backgroundColor: 'white' }}>
-              <Text>Hello!</Text>
-              <TouchableOpacity onPress={this._toggleModal}>
-                <Text>Hide me!</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-      </View>
-    );
   }
-}
-*/
-export default class CustomSlider extends React.Component {
-  state = {
-    isModalVisible: false,
-  };
 
-  _toggleModal = () =>
-    this.setState({ isModalVisible: !this.state.isModalVisible });
 
   render() {
-    const { minValue, maxValue, text, minText, maxText, style } = this.props;
+    const { minValue, maxValue, text, minText, maxText, style, infoText } = this.props;
     return (
-      <View style={[style, styles.mainContainer]}>
-        <Modal
-          style={styles.bottomModal}
-          isVisible={this.state.isModalVisible}
-          onBackdropPress={this._toggleModal}
-        >
-          <View style={{ flex: 1}}>
-            <View style={{ backgroundColor: 'white' }}>
-              <Text>Info</Text>
-              <TouchableOpacity onPress={this._toggleModal}>
-                <Text>Hide me!</Text>
-              </TouchableOpacity>
-            </View>
+      <View>
+
+        <View style={[style, styles.mainContainer]}>
+          <View style={styles.itemContainer}>
+            <H2>{text}</H2>
+            <InfoModal
+              text={infoText}
+            />
           </View>
-        </Modal>
 
-        <View style={styles.itemContainer}>
-          <H2>{text}</H2>
-          <Button
-            icon
-            transparent
-            onPress={this._toggleModal}
-          >
-            <Icon name="information-circle-outline" />
-          </Button>
-        </View>
-        
-        <View style={styles.itemContainer}>
-          <Text>{minText}</Text>
-          <Text>{maxText}</Text>
-        </View>
-        <Slider
-          style={{ alignSelf: 'stretch', marginVertical: 10 }}
-          minimumValue={minValue}
-          maximumValue={maxValue}
-          value={3}
-          step={1}
-          onValueChange={val => console.log(val)}
-          onSlidingComplete={ val => console.log('SLide completed')}
-        />
+          <View style={styles.itemContainer}>
+            <Text>{minText}</Text>
+            <Text>{maxText}</Text>
+          </View>
+          <Slider
+            style={{ alignSelf: 'stretch', marginVertical: 10 }}
+            minimumValue={minValue}
+            maximumValue={maxValue}
+            value={3}
+            step={1}
+            onValueChange={val => console.log(val)}
+            onSlidingComplete={ val => console.log('SLide completed')}
+          />
 
-        <View style={styles.itemContainer}>
-          <Text>{minValue}</Text>
-          <Text>{maxValue}</Text>
+          <View style={styles.itemContainer}>
+            <Text>{minValue}</Text>
+            <Text>{maxValue}</Text>
+          </View>
         </View>
       </View>
     );
@@ -130,12 +75,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 5
-  },
-  bottomModal: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 30,
-  },
+  }
 });
-
-//export default withNavigation(CustomSlider);

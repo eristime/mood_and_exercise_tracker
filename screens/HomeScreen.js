@@ -24,7 +24,7 @@ import Fab from '../components/Fab';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    header: null
   };
 
   constructor (props) {
@@ -53,11 +53,16 @@ export default class HomeScreen extends React.Component {
               <BarChartContainer />
             </Tab>
           </Tabs>
-          <ChartOption text="Exercise" color="blue" />
+          <ChartOption
+            text="Exercise"
+            color="blue"
+            infoText="Thhis is exercise it's though"
+          />
           <ChartOption text="Activity" color="green" />
           <ChartOption text="Happiness" color="red" />
+          <View style={{ height: 100 }} />
         </Content>
-        {/* <Fab /> */}
+        <Fab />
 
       </Container>
     );

@@ -11,35 +11,33 @@ import {
 import {
   CheckBox,
   ListItem,
-  Text,
-  Body,
-  Icon
+  Text
 } from 'native-base';
 import { withNavigation } from 'react-navigation';
+import InfoModal from './InfoModal';
+
 
 const ChartOption = (props) => {
   const checked = props.checked || true;
 
   return (
-    <ListItem>
+    <ListItem style={styles.itemContainer}>
       <CheckBox checked={checked} color={props.color} />
-      <Body>
-        <View style={styles.itemContainer}>
-          <Text style={{ width: 80 }}>{ props.text }</Text>
-          <View>
-            <View
-              style={{
-                height: 5,
-                width: 40,
-                backgroundColor: props.color,
-                marginLeft: 10,
-                marginRight: 20
-              }}
-            />
-          </View>
-          <Icon name="information-circle-outline" />
-        </View>
-      </Body>
+      <Text style={{ width: 80 }}>{ props.text }</Text>
+      <InfoModal
+        text={props.infoText}
+      />
+      <View>
+        <View
+          style={{
+            height: 5,
+            width: 40,
+            backgroundColor: props.color,
+            marginLeft: 10,
+            marginRight: 20
+          }}
+        />
+      </View>
     </ListItem>
   );
 };
@@ -48,7 +46,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-around',
     alignItems: 'center'
   }
 });

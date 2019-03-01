@@ -17,31 +17,28 @@ import { withNavigation } from 'react-navigation';
 
 
 const Fab = (props) => {
-
+  /* Fab item needs to be in the bottom of the screen */
   return (
-    <ActionButton buttonColor="rgba(231,76,60,1)" style={styles.fabButton}>
-      <ActionButton.Item 
-        buttonColor="#9b59b6" 
-        title="Add a reminder" 
-        onPress={() => props.navigation.navigate('Home')}
+    <ActionButton buttonColor="rgba(231,76,60,1)">
+      <ActionButton.Item
+        buttonColor="#9b59b6"
+        title="Add a reminder"
+        onPress={() => props.navigation.navigate('AddReminder')}
       >
-        <Icon name="md-time" style={styles.actionButtonIcon} />
+        <Icon name="time" style={styles.actionButtonIcon} />
       </ActionButton.Item>
       <ActionButton.Item
         buttonColor="#3498db"
         title="Rate your day"
         onPress={() => props.navigation.navigate('AddMood')}
       >
-        <Icon name="md-body" style={styles.actionButtonIcon} />
+        <Icon name="body" style={styles.actionButtonIcon} />
       </ActionButton.Item>
     </ActionButton>
   );
 };
 
 const styles = StyleSheet.create({
-  fabButton: {
-    position: 'absolute',
-  },
   actionButtonIcon: {
     fontSize: 20,
     height: 30,
