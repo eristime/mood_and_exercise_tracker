@@ -56,7 +56,7 @@ export default class HomeScreen extends React.Component {
           <ChartOption
             text="Exercise"
             color="blue"
-            infoText="Thhis is exercise it's though"
+            infoText="This is exercise. It's though"
           />
           <ChartOption text="Activity" color="green" />
           <ChartOption text="Happiness" color="red" />

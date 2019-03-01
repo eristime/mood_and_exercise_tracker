@@ -1,5 +1,4 @@
 - list detail item
-- add reminder
 - choose mood input
 - mood input camera view
 - alerts

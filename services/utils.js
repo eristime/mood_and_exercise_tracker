@@ -1,4 +1,4 @@
-const formatDate = (dateObject) => {
+export const formatDate = (dateObject) => {
   /*
   param:date, JS date object
   returns string format '<year>-<month>-<date>'
@@ -17,4 +17,26 @@ const formatDate = (dateObject) => {
   return `${date}.${month}.${dateObject.getFullYear()}`;
 };
 
-export default formatDate
+export const convertToHoursMinutes = (dateObject) => {
+  /*
+  param:date, JS date object
+  */
+  //returns time in HOURS:MINUTES format
+  // 00:59 for example
+
+  var formattedMinutes = '';
+  if (dateObject.getMinutes() < 10) {
+    formattedMinutes = `0${dateObject.getMinutes()}`;
+  } else {
+    formattedMinutes = `${dateObject.getMinutes()}`;
+  }
+
+  var formattedHours = '';
+  if (dateObject.getHours() < 10) {
+    formattedHours = `0${dateObject.getHours()}`;
+  } else {
+    formattedHours = `${dateObject.getHours()}`;
+  }
+
+  return `${formattedHours}:${formattedMinutes}`;
+};

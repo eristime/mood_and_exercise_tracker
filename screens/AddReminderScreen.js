@@ -7,7 +7,8 @@
 import React from 'react';
 import {
   View,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 
 import {
@@ -19,13 +20,13 @@ import {
   Content,
   Left,
   Icon,
-  H1,
   H3,
   Text,
-  Textarea,
   Form
 } from 'native-base';
-
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import { convertToHoursMinutes } from '../services/utils';
+import DefaultText from '../components/text/DefaultText';
 
 export default class AddReminderScreen extends React.Component {
 
@@ -36,8 +37,19 @@ export default class AddReminderScreen extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      isTimePickerVisible: false,
+      chosenTime: new Date()
     };
   }
+
+  _showTimePicker = () => this.setState({ isTimePickerVisible: true });
+
+  _hideTimePicker = () => this.setState({ isTimePickerVisible: false });
+
+  _handleTimePicked = (time) => {
+    this.setState({ chosenTime: time });
+    this._hideTimePicker();
+  };
 
   render () {
     return (
@@ -54,11 +66,23 @@ export default class AddReminderScreen extends React.Component {
         </Header>
         <Content style={styles.mainContainer}>
           <Form>
-            <H1 style={styles.itemContainer}>How are you feeling today?</H1>
+            <H3 style={[styles.itemContainer]}>Add a reminder so that you remember to evaluate your mood daily.</H3>
+            <View style={styles.rowContainer}>
+              <DefaultText style={[styles.itemContainer]}>Select time for daily notifications: </DefaultText>
+            </View>
+            <View style={[styles.itemContainer, styles.rowContainer]}>
+              <TouchableOpacity onPress={this._showTimePicker}>
+                <Text style={styles.timePickerText}>{convertToHoursMinutes(this.state.chosenTime)}</Text>
+              </TouchableOpacity>
 
-
-            <H3 style={styles.itemContainer}>Describe your day in words:</H3>
-
+              <DateTimePicker
+                date={this.state.chosenTime}
+                isVisible={this.state.isTimePickerVisible}
+                onConfirm={this._handleTimePicked}
+                onCancel={this._hideTimePicker}
+                mode="time"
+              />
+            </View>
 
           </Form>
           <View style={[styles.itemContainer, styles.bottomItem]}>
@@ -86,5 +110,9 @@ const styles = StyleSheet.create({
   },
   bottomItem: {
     marginBottom: 20
+  },
+  timePickerText: {
+    fontSize: 26,
+    fontWeight: 'bold'
   }
 });

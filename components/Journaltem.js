@@ -16,14 +16,14 @@ import {
   Icon
 } from 'native-base';
 import { withNavigation } from 'react-navigation';
-import formatDate from '../services/utils';
+import { formatDate } from '../services/utils';
 
 
 const JournalItem = (props) => {
   const { exercise, happiness, activiness } = props.journalItem;
   const date = formatDate(props.journalItem.date) || '--';
   return (
-    <TouchableOpacity >
+    <TouchableOpacity>
 
       <ListItem itemDivider>
         <Text>{date}</Text>
