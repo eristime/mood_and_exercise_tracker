@@ -23,13 +23,29 @@ const JournalItem = (props) => {
   const { exercise, happiness, activiness } = props.journalItem;
   const date = formatDate(props.journalItem.date) || '--';
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={
+        () => props.navigation.navigate('JournalDetail',
+          { journalItem: props.journalItem })
+      }
+    >
 
-      <ListItem itemDivider>
+      <ListItem button itemDivider>
         <Text>{date}</Text>
       </ListItem>
 
-      <ListItem>
+      <ListItem
+        button
+        onPress={
+          () => props.navigation.navigate(
+            'JournalDetail',
+            {
+              journalItem: props.journalItem,
+              navigation: props.navigation
+            }
+          )
+        }
+      >
         <View style={styles.itemContainer}>
           <Icon name="walk" />
           <Text>Exercise</Text>

@@ -1,4 +1,6 @@
-- choose mood input
 - mood input camera view
 - alerts
+- fab
+- choose colors and fonts
 - date formatting: today, yesterday
+- reminder

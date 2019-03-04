@@ -30,7 +30,7 @@ const Fab = (props) => {
       <ActionButton.Item
         buttonColor="#3498db"
         title="Rate your day"
-        onPress={() => props.navigation.navigate('ChooseMoodInputScreen')}
+        onPress={() => props.navigation.navigate('ChooseMoodInput')}
       >
         <Icon name="body" style={styles.actionButtonIcon} />
       </ActionButton.Item>

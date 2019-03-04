@@ -18,21 +18,23 @@ import JournalScreen from '../screens/Journal';
 import AddMoodScreen from '../screens/AddMoodScreen';
 import AddReminderScreen from '../screens/AddReminderScreen';
 import ChooseMoodInputScreen from '../screens/ChooseMoodInputScreen';
+import JournalDetailScreen from '../screens/JounalDetailScreen';
 
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   AddMood: AddMoodScreen,
   AddReminder: AddReminderScreen,
-  ChooseMoodInputScreen
+  ChooseMoodInput: ChooseMoodInputScreen
 });
 
 
 const JournalsStack = createStackNavigator({
   Journal: JournalScreen,
+  JournalDetail: JournalDetailScreen,
   AddMood: AddMoodScreen,
   AddReminder: AddReminderScreen,
-  ChooseMoodInputScreen
+  ChooseMoodInput: ChooseMoodInputScreen
 });
 
 // show tabBar only in Home and Journal Screens

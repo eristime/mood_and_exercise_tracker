@@ -44,26 +44,26 @@ export default class JournalScreen extends React.Component {
     this.setState({
       data: [
         {
-          exercise: 4.5,
+          exercise: 1.1,
           happiness: 4,
           activity: 3,
           date: new Date()
 
         },
         {
-          exercise: 4.5,
+          exercise: 7.7,
           happiness: 4,
           activity: 3,
           date: new Date()
         },
         {
-          exercise: 4.5,
+          exercise: 2.3,
           happiness: 4,
           activity: 3,
           date: new Date()
         },
         {
-          exercise: 4.5,
+          exercise: 4.4,
           happiness: 4,
           activity: 3,
           date: new Date()
@@ -107,7 +107,7 @@ export default class JournalScreen extends React.Component {
                 journalItem={item}
               />
             )}
-            keyExtractor={item => item.date}
+            keyExtractor={item => item.exercise.toString()}  // TODO: define proper key
             ListEmptyComponent={this.renderEmpty}
             // ListHeaderComponent={this.renderHeader}
           />

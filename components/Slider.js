@@ -27,7 +27,18 @@ export default class CustomSlider extends React.Component {
 
 
   render() {
-    const { minValue, maxValue, text, minText, maxText, style, infoText } = this.props;
+    const { 
+      minValue,
+      maxValue,
+      text,
+      minText,
+      maxText,
+      style,
+      infoText
+    } = this.props;
+    const defaultValue = this.props.defaultValue || 3;
+    const disabled = this.props.disabled ? true : false;
+
     return (
       <View>
 
@@ -47,10 +58,11 @@ export default class CustomSlider extends React.Component {
             style={{ alignSelf: 'stretch', marginVertical: 10 }}
             minimumValue={minValue}
             maximumValue={maxValue}
-            value={3}
+            value={defaultValue}
             step={1}
             onValueChange={val => console.log(val)}
             onSlidingComplete={ val => console.log('SLide completed')}
+            disabled={disabled}
           />
 
           <View style={styles.itemContainer}>
