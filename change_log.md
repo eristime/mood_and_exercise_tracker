@@ -1,3 +1,2 @@
-- not showing tabnavigatorin addMood screen
-- info boxes
-- adding space to fab so that all elements can be seen when scrolling down
+- update fab
+- add alerts

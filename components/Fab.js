@@ -23,6 +23,8 @@ const Fab = (props) => {
       <ActionButton.Item
         buttonColor="#9b59b6"
         title="Add a reminder"
+        textContainerStyle={{ height: 28, padding: 10, borderRadius: 10 }}
+        textStyle={{ fontSize: 16 }}
         onPress={() => props.navigation.navigate('AddReminder')}
       >
         <Icon name="time" style={styles.actionButtonIcon} />
@@ -30,6 +32,8 @@ const Fab = (props) => {
       <ActionButton.Item
         buttonColor="#3498db"
         title="Rate your day"
+        textContainerStyle={{ height: 28, padding: 10, borderRadius: 10 }}
+        textStyle={{ fontSize: 16 }}
         onPress={() => props.navigation.navigate('ChooseMoodInput')}
       >
         <Icon name="body" style={styles.actionButtonIcon} />

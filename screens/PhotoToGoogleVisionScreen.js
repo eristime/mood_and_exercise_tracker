@@ -9,14 +9,9 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  TouchableOpacity,
-  Image
+  Image,
+  Alert
 } from 'react-native';
-import {
-  Camera,
-  Permissions,
-  FileSystem
-} from 'expo';
 import {
   Body,
   Title,
@@ -42,12 +37,30 @@ export default class PhotoToGoogleVisionScreen extends React.Component {
 
     };
   }
-  
+
+  detectMood = async (photoURI) => {
+    // TODO: get google vision mood
+    // TODO: save mood
+
+    Alert.alert(
+      'A new mood added',
+      'Your mood was detected successfully. See "Journal" for more information.'
+    )
+
+    if (false){
+      Alert.alert(
+        'Mood detection error',
+        'We couldn\'t detect your mood.\
+        Please check your Internet connection and try again.\
+        You can also add your mood manually.'
+      )
+    }
+  }
 
   render () {
     const photoURI = this.props.navigation.getParam('uri');
-  
-    console.log('photoURI', photoURI);
+
+    // console.log('photoURI', photoURI);
     return (
       <Container style={{ flex: 1 }}>
         <Header>
@@ -77,7 +90,7 @@ export default class PhotoToGoogleVisionScreen extends React.Component {
               <Button
                 block
                 primary
-                onPress={this.takePicture}
+                onPress={this.detectMood}
               >
                 <Text>DETECT MOOD</Text>
               </Button>
@@ -110,12 +123,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     height: 300
-  },
-  pictureWrapper: {
-    width: 200,
-    height: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 5
   }
 });

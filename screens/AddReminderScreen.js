@@ -8,7 +8,8 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 
 import {
@@ -51,6 +52,14 @@ export default class AddReminderScreen extends React.Component {
     this._hideTimePicker();
   };
 
+  saveReminder = () => {
+    // TODO: save reminder
+    Alert.alert(
+      'A reminder added',
+      'You will now receive a reminder notification at 19:00.'
+    )
+  };
+
   render () {
     return (
       <Container style={{ flex: 1 }}>
@@ -86,7 +95,13 @@ export default class AddReminderScreen extends React.Component {
 
           </Form>
           <View style={[styles.itemContainer, styles.bottomItem]}>
-            <Button block success><Text>SAVE</Text></Button>
+            <Button
+              block
+              success
+              onPress={this.saveReminder}
+            >
+              <Text>SAVE</Text>
+            </Button>
           </View>
         </Content>
 
