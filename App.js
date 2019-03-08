@@ -7,13 +7,10 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, ToastAndroid } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { Root } from 'react-native';
+import { StyleProvider } from 'native-base';
 import AppNavigator from './navigation/AppNavigator';
-
-// export default App =>
-//   <Root>
-//     <Applet />
-//   </Root>;
+import getTheme from './native-base-theme/components';
+import appTheme from './native-base-theme/variables/mood_and_exercise_tracker_theme';
 
 
 export default class App extends React.Component {
@@ -34,7 +31,9 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <StyleProvider style={ getTheme(appTheme) }>
             <AppNavigator />
+          </StyleProvider>
         </View>
       );
     }
@@ -73,6 +72,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
 });
