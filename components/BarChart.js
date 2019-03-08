@@ -9,18 +9,11 @@ import {
   StyleSheet
 } from 'react-native';
 import {
-  Left,
-  Right,
-  CheckBox,
-  ListItem,
-  Text,
-  Body,
   H2,
   Icon
 } from 'native-base';
 import { withNavigation } from 'react-navigation';
 import {
-  VictoryBar,
   VictoryLine,
   VictoryChart,
   VictoryGroup

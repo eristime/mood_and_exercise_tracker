@@ -1,2 +1,2 @@
-- update fab
-- add alerts
+- Pressing either exercise, happiness or activiness from hournal item directs to detailview
+- return yesterday or today to journal item

@@ -20,7 +20,7 @@ import { formatDate } from '../services/utils';
 
 
 const JournalItem = (props) => {
-  const { exercise, happiness, activiness } = props.journalItem;
+  const { exercise = '--', happiness = '--', activiness = '--' } = props.journalItem;
   const date = formatDate(props.journalItem.date) || '--';
   return (
     <TouchableOpacity
@@ -56,7 +56,17 @@ const JournalItem = (props) => {
         </View>
       </ListItem>
 
-      <ListItem>
+      <ListItem
+        onPress={
+          () => props.navigation.navigate(
+            'JournalDetail',
+            {
+              journalItem: props.journalItem,
+              navigation: props.navigation
+            }
+          )
+        }
+      >
         <View style={styles.itemContainer}>
           <Icon name="happy" />
           <Text>Happiness</Text>
@@ -67,7 +77,17 @@ const JournalItem = (props) => {
         </View>
       </ListItem>
 
-      <ListItem>
+      <ListItem
+        onPress={
+          () => props.navigation.navigate(
+            'JournalDetail',
+            {
+              journalItem: props.journalItem,
+              navigation: props.navigation
+            }
+          )
+        }
+      >
         <View style={styles.itemContainer}>
           <Icon name="trending-up" />
           <Text>Activiness</Text>

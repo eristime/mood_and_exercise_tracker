@@ -1,5 +1,3 @@
-- choose colors and fonts
-- date formatting: today, yesterday
 - reminder screen
 - reminder mechanism
 - database interface
