@@ -19,13 +19,17 @@ import AddMoodScreen from '../screens/AddMoodScreen';
 import AddReminderScreen from '../screens/AddReminderScreen';
 import ChooseMoodInputScreen from '../screens/ChooseMoodInputScreen';
 import JournalDetailScreen from '../screens/JounalDetailScreen';
+import AddCameraMoodScreen from '../screens/AddCameraMoodScreen';
+import PhotoToGoogleVisionScreen from '../screens/PhotoToGoogleVisionScreen';
 
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   AddMood: AddMoodScreen,
   AddReminder: AddReminderScreen,
-  ChooseMoodInput: ChooseMoodInputScreen
+  ChooseMoodInput: ChooseMoodInputScreen,
+  AddCameraMood: AddCameraMoodScreen,
+  PhotoToGoogleVision: PhotoToGoogleVisionScreen
 });
 
 
@@ -34,7 +38,9 @@ const JournalsStack = createStackNavigator({
   JournalDetail: JournalDetailScreen,
   AddMood: AddMoodScreen,
   AddReminder: AddReminderScreen,
-  ChooseMoodInput: ChooseMoodInputScreen
+  ChooseMoodInput: ChooseMoodInputScreen,
+  AddCameraMood: AddCameraMoodScreen,
+  PhotoToGoogleVision: PhotoToGoogleVisionScreen
 });
 
 // show tabBar only in Home and Journal Screens

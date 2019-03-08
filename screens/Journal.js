@@ -25,7 +25,7 @@ import Journaltem from '../components/Journaltem';
 
 export default class JournalScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    header: null
   };
 
   constructor (props) {
@@ -107,7 +107,7 @@ export default class JournalScreen extends React.Component {
                 journalItem={item}
               />
             )}
-            keyExtractor={item => item.exercise.toString()}  // TODO: define proper key
+            keyExtractor={item => item.exercise.toString()} // TODO: define proper key
             ListEmptyComponent={this.renderEmpty}
             // ListHeaderComponent={this.renderHeader}
           />

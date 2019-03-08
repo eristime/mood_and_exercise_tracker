@@ -62,7 +62,7 @@ export default class ChooseMoodInput extends React.Component {
 
             <TouchableOpacity
               style={styles.buttonStyle}
-              onPress={() => this.props.navigation.navigate('AddMood')}
+              onPress={() => this.props.navigation.navigate('AddCameraMood')}
             >
               <H3>Rate your mood by taking a picture. Google Vision will detect how your feeling today.</H3>
             </TouchableOpacity>
