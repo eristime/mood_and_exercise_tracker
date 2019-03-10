@@ -17,6 +17,7 @@ import HomeScreen from '../screens/HomeScreen';
 import JournalScreen from '../screens/Journal';
 import AddMoodScreen from '../screens/AddMoodScreen';
 import AddReminderScreen from '../screens/AddReminderScreen';
+import ChangeReminderScreen from '../screens/ChangeReminderScreen';
 import ChooseMoodInputScreen from '../screens/ChooseMoodInputScreen';
 import JournalDetailScreen from '../screens/JounalDetailScreen';
 import AddCameraMoodScreen from '../screens/AddCameraMoodScreen';
@@ -27,6 +28,7 @@ const HomeStack = createStackNavigator({
   Home: HomeScreen,
   AddMood: AddMoodScreen,
   AddReminder: AddReminderScreen,
+  ChangeReminder: ChangeReminderScreen,
   ChooseMoodInput: ChooseMoodInputScreen,
   AddCameraMood: AddCameraMoodScreen,
   PhotoToGoogleVision: PhotoToGoogleVisionScreen
@@ -38,6 +40,7 @@ const JournalsStack = createStackNavigator({
   JournalDetail: JournalDetailScreen,
   AddMood: AddMoodScreen,
   AddReminder: AddReminderScreen,
+  ChangeReminder: ChangeReminderScreen,
   ChooseMoodInput: ChooseMoodInputScreen,
   AddCameraMood: AddCameraMoodScreen,
   PhotoToGoogleVision: PhotoToGoogleVisionScreen

@@ -33,7 +33,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import { convertToHoursMinutes } from '../services/utils';
 import DefaultText from '../components/text/DefaultText';
 
-export default class AddReminderScreen extends React.Component {
+export default class ChangeReminderScreen extends React.Component {
 
   static navigationOptions = {
     header: null
@@ -70,9 +70,25 @@ export default class AddReminderScreen extends React.Component {
   };
 
 
+  deleteReminder = async () => {
+    await Notifications.cancelAllNotificationsAsync()
+      .then((result) => {
+        Alert.alert(
+          'Reminder notification removed successfully.',
+          result
+        );
+        this.props.navigation.replace('AddReminder');
+      })
+      .catch((e) => {
+        Alert.alert(
+          'Removing previous notifications failed.',
+          e
+        );
+      });
+  };
+
   saveReminder = async () => {
     /* Cancel all previous notifications and add a new one. */
-
     try {
       await Notifications.cancelAllNotificationsAsync();
     } catch (e) {
@@ -82,9 +98,10 @@ export default class AddReminderScreen extends React.Component {
       );
     }
 
+
     const localNotification = {
       title: 'Mood and exercise tracker',
-      body: 'Remember to rate your mood today.'
+      body: 'Remember to rate your mood today'
     };
 
     const schedulingOptions = {
@@ -100,15 +117,16 @@ export default class AddReminderScreen extends React.Component {
     ));
 
     // TODO: save notification id and time
+    this.setState({ previousNotification: true});
     Alert.alert(
       'A reminder added',
-      `You will now receive a reminder notification at ${convertToHoursMinutes(this.state.chosenTime)} everyday.`
+      `You will now receive a reminder notification at \
+       ${convertToHoursMinutes(this.state.chosenTime)} everyday.`
     );
-    this.props.navigation.replace('ChangeReminder');
   };
 
   handleNotification = () => {
-    this.props.navigation.replace('ChooseMoodInput');
+    this.props.navigation.navigate('ChooseMoodInput');
     console.warn('ok! got your notif');
   }
 
@@ -123,7 +141,7 @@ export default class AddReminderScreen extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>Add a reminder</Title>
+            <Title>Change a reminder</Title>
           </Body>
         </Header>
         <Content style={styles.mainContainer}>
@@ -131,7 +149,7 @@ export default class AddReminderScreen extends React.Component {
             <H3
               style={[styles.itemContainer]}
             >
-              Add a reminder so that you remember to evaluate your mood daily.
+              You have already set a reminder. Here you can change or remove it.
             </H3>
             <View style={styles.rowContainer}>
               <DefaultText style={[styles.itemContainer]}>Select time for daily notifications: </DefaultText>
@@ -151,14 +169,20 @@ export default class AddReminderScreen extends React.Component {
             </View>
 
           </Form>
-          <View style={[styles.itemContainer, styles.bottomItem]}>
-          <Button
-            block
-            success
-            onPress={this.saveReminder}
-          >
-            <Text>SAVE</Text>
-          </Button>
+          <View style={[styles.itemContainer, styles.bottomItem, styles.rowContainer]}>
+            <Button
+              danger
+              onPress={this.deleteReminder}
+            >
+              <Text>DELETE</Text>
+            </Button>
+            <Button
+              success
+              onPress={this.saveReminder}
+            >
+              <Text>SAVE</Text>
+            </Button>
+
           </View>
         </Content>
 
@@ -178,7 +202,7 @@ const styles = StyleSheet.create({
   rowContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'space-around'
   },
   bottomItem: {
     marginBottom: 20

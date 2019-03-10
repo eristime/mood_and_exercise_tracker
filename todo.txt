@@ -1,7 +1,8 @@
-- reminder screen
-- reminder mechanism
 - database interface
-- save moods
+- save reminders to db
+- save moods to db
+- save steps to db
 - app container
 - chart container
 - Google vision
+- loading screens
