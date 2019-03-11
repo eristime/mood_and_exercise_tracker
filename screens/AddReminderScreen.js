@@ -32,6 +32,7 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { convertToHoursMinutes } from '../services/utils';
 import DefaultText from '../components/text/DefaultText';
+import Reminder from '../services/localDB';
 
 export default class AddReminderScreen extends React.Component {
 
@@ -74,7 +75,7 @@ export default class AddReminderScreen extends React.Component {
     /* Cancel all previous notifications and add a new one. */
 
     try {
-      await Notifications.cancelAllNotificationsAsync();
+      await Notifications.cancelAllScheduledNotificationsAsync();
     } catch (e) {
       console.log(e);
       Alert.alert(
@@ -98,6 +99,11 @@ export default class AddReminderScreen extends React.Component {
       'Adding reminder failed.',
       e
     ));
+    console.log('notIfication id', notificationId);
+
+    //Reminder.Addreminder(notificationId, this.state.chosenTime.toUTCString());
+    const reminder = await Reminder.getReminder(notificationId);
+    console.log('reminder from db', reminder);
 
     // TODO: save notification id and time
     Alert.alert(
