@@ -55,7 +55,8 @@ export class Record {
           steps INTEGER,\
           happiness INTEGER,\
           activiness INTEGER,\
-          date TEXT );'
+          date TEXT,\
+          note TEXT );'
       );
     }); 
   }
@@ -64,18 +65,13 @@ export class Record {
     return new Promise((resolve, reject) => {
       DB.transaction(tx => {
         tx.executeSql(
-          `SELECT * FROM records ORDER BY date(date) ASC;`,
+          `SELECT * FROM records ORDER BY date(date) DESC;`,
           null,
           (_, { rows: { _array } }) => { resolve(_array) }
         );
       });
     });
   }
-
-  static recordForTodayExists =  () => {
-    1;
-  };
-
 
   static _updateRecord = (recordID, steps=false, happiness=false, activiness=false) => {
     let stmt = `UPDATE records SET `
@@ -101,13 +97,27 @@ export class Record {
     stmt += 'WHERE id = ?;';
     params.push(recordID);
 
-    DB.transaction(
-      tx => {
-        tx.executeSql(stmt, params,);
-      },
-      null,
-      null
-    );
+    return new Promise((resolve, reject) => {
+      DB.transaction(
+        tx => {
+          tx.executeSql(
+            stmt,
+            params,
+            s => console.log('Update execute for id ' + recordID + ' successful.'),
+            e => console.log(e),
+          )
+        },
+        e => {
+          console.log(e);
+          reject(e);
+        },
+        s => {
+          console.log('Update transaction for id ' + recordID + ' successful.');
+          resolve(s);
+        }
+      );
+    });
+
   };
 
   static _insertRecord = (steps=false, happiness=false, activiness=false) => {
@@ -142,18 +152,18 @@ export class Record {
     stmt2 += ');';
     
     stmt = stmt1 + stmt2
-    console.log('stmt', stmt)
+
     DB.transaction(
       tx => {
         tx.executeSql(stmt, params,);
       },
-      null,
-      null
+      e => console.log(e),
+      s => console.log('Insert successful.')
     );
   };
 
 
-  static addRecord = (steps=false, happiness=false, activiness=false) => {
+  static addRecord = async (steps=false, happiness=false, activiness=false) => {
     /* 
     Add a new record for today if an old one doesn't exist
     */
@@ -178,7 +188,7 @@ export class Record {
           .catch(e => {console.log(e);});
 
           if (id) {
-            this._updateRecord(id, steps, happiness, activiness);
+            await this._updateRecord(id, steps, happiness, activiness);
           } else {
             this._insertRecord(steps, happiness, activiness);
           }
@@ -190,7 +200,17 @@ export class Record {
     });
   };
 
-  static _addRecord = (steps, happiness, activiness, date) => {
+  //static updateRecord = (id, steps=false, happiness=false, activiness=false) => {
+  //  /* 
+  //  Add a new record for today if an old one doesn't exist
+  //  */
+  //  return new Promise((resolve, reject) => {
+  //    () => {
+  //      this._updateRecord(id, steps, happiness, activiness)
+  //  });
+  //};
+
+  static _addRecord = (steps, happiness, activiness) => {
 
     DB.transaction(
       tx => {

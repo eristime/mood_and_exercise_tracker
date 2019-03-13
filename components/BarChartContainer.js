@@ -6,7 +6,7 @@
 import React from 'react';
 
 import BarChart from './BarChart';
-
+import {formatDate} from '../services/utils';
 
 export default class BarChartContainer extends React.Component {
 
@@ -14,7 +14,8 @@ export default class BarChartContainer extends React.Component {
     super(props)
     this.state = {
       exerciseData: exerciseData,
-      happinessData: happinessData
+      happinessData: happinessData,
+      activinessData: activinessData
     };
   }
 
@@ -23,51 +24,63 @@ export default class BarChartContainer extends React.Component {
       <BarChart
         exerciseData={this.state.exerciseData}
         happinessData={this.state.happinessData}
-        title="January"
+        activinessData={this.state.activinessData}
+        title="March: week 10"
       />
     );
   }
 }
 
 
-const exerciseData = [
-  {
-    x: 15, y: 20
-  },
-  {
-    x: 25, y: 30
-  },
-  {
-    x: 35, y: 65
-  },
-  {
-    x: 40, y: 50
-  },
-  {
-    x: 45, y: 40
-  },
-  {
-    x: 50, y: 30
-  }
-];
+const exerciseData = [{
+  y: 1.1,
+  x: new Date('2019-03-08')
+},
+{
+  y: 7.7,
+  x: new Date('2019-03-07')
+},
+{
+  y: 2.3,
+  x: new Date('2019-03-06')
+},
+{
+  y: 4.4,
+  x: new Date('2019-03-05')
+}]
 
-const happinessData = [
-  {
-    x: 2, y: 3
-  },
-  {
-    x: 4, y: 5
-  },
-  {
-    x: 10, y: 20
-  },
-  {
-    x: 33, y: 22
-  },
-  {
-    x: 45, y: 40
-  },
-  {
-    x: 50, y: 30
-  }
-];
+
+const happinessData = [{
+  y: 4,
+  x: new Date('2019-03-08')
+},
+{
+  y: 3,
+  x: new Date('2019-03-07')
+},
+{
+  y: 4,
+  x: new Date('2019-03-06')
+},
+{
+  y: 3,
+  x: new Date('2019-03-05')
+}]
+
+
+const activinessData = [{
+  y: 3,
+  x: new Date('2019-03-08')
+},
+{
+  y: 3,
+  x: new Date('2019-03-07')
+},
+{
+  y: 3,
+  x: new Date('2019-03-06')
+},
+{
+  y: 2,
+  x: new Date('2019-03-05')
+}]

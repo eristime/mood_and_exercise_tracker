@@ -1,65 +1,41 @@
+/* eslint-disable no-multiple-empty-lines */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable semi */
+/* eslint-disable no-unused-vars */
+/* eslint-disable linebreak-style */
 import { AsyncStorage } from 'react-native';
 
 const deviceStorage = {
-     saveItem: async (key, value) => {
-      try {
-        await AsyncStorage.setItem(key, value);
-      } catch (error) {
-        console.log('AsyncStorage Error: ' + error.message);
-      }
-    },
 
+  saveRecords: async (item) => {
+    try {
+      await AsyncStorage.setItem('records', JSON.stringify(item));
+      console.log('item saved to storage');
+    } catch (error) {
+      console.log('AsyncStorage Error: ' + error.message);
+    }
+  },
 
-    getRecords: async () => {
-        try {
-            return await AsyncStorage.getItem('records');
-          //if (value !== null) {
-          //  this.setState({
-          //    token: value,
-          //    loading: false
-          //  });
-          //} else {
-          //  this.setState({
-          //    loading: false
-          //  });
-          //}
-        } catch (error) {
-          console.log('AsyncStorage Error: ' + error.message);
-        }
-      },
+  loadRecords: async () => {
+    try {
+      const retrievedItem = await AsyncStorage.getItem('records');
+      const result = retrievedItem ? JSON.parse(retrievedItem) : [];
+      return result;
+    } catch (error) {
+      console.log('AsyncStorage Error: ' + error.message);
+    }
+    return [];
+  },
 
-      getRecords: async () => {
-        try {
-            return await AsyncStorage.getItem('records');
-          //if (value !== null) {
-          //  this.setState({
-          //    token: value,
-          //    loading: false
-          //  });
-          //} else {
-          //  this.setState({
-          //    loading: false
-          //  });
-          //}
-        } catch (error) {
-          console.log('AsyncStorage Error: ' + error.message);
-        }
-      },
-      deleteToken: async () => {
-        try {
-          await AsyncStorage.removeItem('token');
-          //.then(
-          //  () => {
-          //    this.setState({
-          //      token: ''
-          //    })
-          //  }
-          //);
-        } catch (error) {
-          console.log('AsyncStorage Error: ' + error.message);
-        }
-      }
-    
-  };
+  removeRecords: async () => {
+    try {
+      await AsyncStorage.removeItem('records');
+      console.log('item removed');
+    } catch (error) {
+      console.log('AsyncStorage Error: ' + error.message);
+    }
+  }
+
+};
 
 export default deviceStorage;

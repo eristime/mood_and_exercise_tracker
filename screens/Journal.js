@@ -6,11 +6,8 @@
 
 import React from 'react';
 import {
-  View,
-  StyleSheet,
   FlatList
 } from 'react-native';
-
 import {
   Container,
   Header,
@@ -21,56 +18,12 @@ import {
 } from 'native-base';
 import Fab from '../components/Fab';
 import Journaltem from '../components/Journaltem';
-
+import RecordsContext from '../contexts/RecordsContext';
 
 export default class JournalScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
-
-  constructor (props) {
-    super(props);
-    this.state = {
-      data: []
-    };
-  }
-
-  componentDidMount () {
-    this.loadData();
-  }
-
-  loadData = () => {
-    /* Mock sqlite behaviour */
-    this.setState({
-      data: [
-        {
-          exercise: 1.1,
-          happiness: 4,
-          activity: 3,
-          date: new Date()
-
-        },
-        {
-          exercise: 7.7,
-          happiness: 4,
-          activity: 3,
-          date: new Date('2019-03-07T03:24:00')
-        },
-        {
-          exercise: 2.3,
-          happiness: 4,
-          activity: 3,
-          date: new Date('2019-03-06T03:24:00')
-        },
-        {
-          exercise: 4.4,
-          happiness: 4,
-          activity: 3,
-          date: new Date('2019-03-05T03:24:00')
-        }
-      ]
-    });
-  }
 
   renderEmpty = () => {
     return (
@@ -79,16 +32,6 @@ export default class JournalScreen extends React.Component {
       </Content>
     );
   };
-
-  renderHeader = () => {
-    return (
-      <Header fixed>
-        <Body>
-          <Title>Journal</Title>
-        </Body>
-      </Header>
-    );
-  }
 
 
   render () {
@@ -100,18 +43,20 @@ export default class JournalScreen extends React.Component {
           </Body>
         </Header>
         <Content>
-          <FlatList
-            data={this.state.data}
-            renderItem={({ item }) => (
-              <Journaltem
-                journalItem={item}
-              />
-            )}
-            keyExtractor={item => item.exercise.toString()} // TODO: define proper key
-            ListEmptyComponent={this.renderEmpty}
-            // ListHeaderComponent={this.renderHeader}
-          />
-
+          <RecordsContext.Consumer>
+            {({ records }) => 
+              <FlatList
+              data={records}
+              renderItem={({ item }) => (
+                <Journaltem
+                  journalItem={item}
+                />
+              )}
+              keyExtractor={item => item.date}
+              ListEmptyComponent={this.renderEmpty}
+            />
+            }
+          </RecordsContext.Consumer>
         </Content>
 
         <Fab />

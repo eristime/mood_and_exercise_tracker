@@ -1,8 +1,10 @@
-- database interface
+- plot charts
+- add texts
 - save reminders to db
 - save moods to db
-- save steps to db
-- app container
-- chart container
+- structure to src
 - Google vision
+- better passing of consumers to JournalItem
+- time for redux already?
 - loading screens
+- tests

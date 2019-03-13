@@ -16,12 +16,14 @@ import {
   Icon
 } from 'native-base';
 import { withNavigation } from 'react-navigation';
-import { formatDate } from '../services/utils';
+import { presentDate } from '../services/utils';
 
 
 const JournalItem = (props) => {
-  const { exercise = '--', happiness = '--', activiness = '--' } = props.journalItem;
-  const date = formatDate(props.journalItem.date) || '--';
+  const { exercise = 0 } = props.journalItem;
+  const happiness = props.journalItem.happiness ? props.journalItem.happiness.toString() : '--';
+  const activiness = props.journalItem.activiness ? props.journalItem.activiness.toString(): '--';
+  const date = presentDate(props.journalItem.date) || '--';
   return (
     <TouchableOpacity
       onPress={

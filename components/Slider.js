@@ -36,7 +36,7 @@ export default class CustomSlider extends React.Component {
       style,
       infoText
     } = this.props;
-    const defaultValue = this.props.defaultValue || 3;
+    const defaultValue = this.props.value || 3;
     const disabled = this.props.disabled ? true : false;
 
     return (
@@ -60,8 +60,7 @@ export default class CustomSlider extends React.Component {
             maximumValue={maxValue}
             value={defaultValue}
             step={1}
-            onValueChange={val => console.log(val)}
-            onSlidingComplete={ val => console.log('SLide completed')}
+            onValueChange={val => {this.props.onValueChange(val)}}
             disabled={disabled}
           />
 

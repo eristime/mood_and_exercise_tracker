@@ -65,7 +65,7 @@ export default class AddMoodScreen extends React.Component {
                 maxText="Happy"
                 minValue={1}
                 maxValue={5}
-                infoText="Happiness is being happyy."
+                infoText="Happiness is being happy."
               />
             </View>
 

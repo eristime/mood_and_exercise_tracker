@@ -1,14 +1,19 @@
-
-export const formatDate = (dateObject) => {
+/* eslint-disable no-multiple-empty-lines */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable semi */
+/* eslint-disable no-unused-vars */
+/* eslint-disable linebreak-style */
+export const presentDate = (dateString) => {
   /*
-  param:date, JS date object
-  returns string format '<year>-<month>-<date>'
-
+  param:
+    dateString (string): <year>-<month>-<date>
+  returns string format ''
   if dateObject is today, then return 'Today'
   if dateObject was yesterday, then return 'Yesterday'
-
   */
+
   // getMonth() returns month from 0 to 11
+  const dateObject = new Date(dateString);
   let year = dateObject.getFullYear().toString();
   let month = (dateObject.getMonth() + 1).toString();
   let date = dateObject.getDate().toString();
@@ -18,7 +23,6 @@ export const formatDate = (dateObject) => {
   if (dateObject.toDateString() === today.toDateString()) {
     return 'Today'
   }
-
   // check if date yesterday, == to avoid string conversion
   if (year == today.getFullYear() &&
       month == (today.getMonth() + 1) &&
@@ -26,7 +30,6 @@ export const formatDate = (dateObject) => {
   ) {
     return 'Yesterday'
   }
-
   if (month.length < 2) {
     month = '0' + month;
   }
@@ -36,11 +39,45 @@ export const formatDate = (dateObject) => {
   return `${date}.${month}.${dateObject.getFullYear()}`;
 };
 
+export const dateIsToday = (dateObject) => {
+  /*
+  param:date, dateObject
+  returns true if dateObject is today, otherwise false
+
+  */
+  if (dateObject.toDateString() === (new Date()).toDateString()) {
+    return true;
+  }
+  return false;
+};
+
+export const formatDate = (dateObject) => {
+  /*
+  param:date, JS date object
+  returns string format '<year>-<month>-<date>'
+
+  */
+  // getMonth() returns month from 0 to 11
+  let year = dateObject.getFullYear().toString();
+  let month = (dateObject.getMonth() + 1).toString();
+  let date = dateObject.getDate().toString();
+
+
+  if (month.length < 2) {
+    month = '0' + month;
+  }
+  if (date.length < 2) {
+    date = '0' + date;
+  }
+  return `${dateObject.getFullYear()}-${month}-${date}`;
+};
+
+
 export const convertToHoursMinutes = (dateObject) => {
   /*
   param:date, JS date object
   */
-  //returns time in HOURS:MINUTES format
+  // returns time in HOURS:MINUTES format
   // 00:59 for example
 
   var formattedMinutes = '';
@@ -58,4 +95,12 @@ export const convertToHoursMinutes = (dateObject) => {
   }
 
   return `${formattedHours}:${formattedMinutes}`;
+};
+
+
+export const stepsToKM = steps => {
+  /*
+  Formula approximated from Google Fit.
+  */
+  return Number((steps * 0.66) / 1000).toFixed(3) || 0;
 };

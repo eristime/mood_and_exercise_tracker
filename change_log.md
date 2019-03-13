@@ -1,2 +1,4 @@
-- Pressing either exercise, happiness or activiness from hournal item directs to detailview
-- return yesterday or today to journal item
+- saving records to async storage and loading when booting up
+- saving steps from pedometer to async storage
+- main chart colors
+- contexts moved to contexts dir

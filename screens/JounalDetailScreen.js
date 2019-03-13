@@ -10,7 +10,6 @@ import {
   StyleSheet,
   Alert
 } from 'react-native';
-
 import {
   Body,
   Title,
@@ -25,26 +24,41 @@ import {
   Textarea,
   Form
 } from 'native-base';
+import { withNavigation } from 'react-navigation';
 import CustomSlider from '../components/Slider';
 import ExerciseItem from '../components/ExerciseItem';
-import { formatDate } from '../services/utils';
+import { presentDate } from '../services/utils';
+import RecordsContext from '../contexts/RecordsContext';
 
-
-export default class JournalDetailScreen extends React.Component {
+class JournalDetailScreen extends React.Component {
 
   static navigationOptions = {
     header: null
   };
 
+  static contextType = RecordsContext;
+
   constructor (props) {
     super(props);
     const { navigation } = props;
     this.journalItem = navigation.getParam('journalItem');
+    console.log('journalitem', this.journalItem);
+
+    const {
+      happiness = 0,
+      activiness = 0
+    } = this.journalItem;
+    const note = this.journalItem.note || '--';
+ 
     this.navigation = navigation.getParam('navigation');
     this.state = {
-      disabled: true
+      happiness: happiness,
+      activiness: activiness,
+      note: note,
+      disabled: true,
     };
   }
+  
 
   toggleEditable = () => {
     this.setState((state) => {
@@ -52,15 +66,16 @@ export default class JournalDetailScreen extends React.Component {
     });
   }
 
-  onSaveButtonPress = () => {
-    this.toggleEditable();
-    // TODO: save the results
-    Alert.alert(
-      'Mood successfully changed.'
-    )
+
+  onHappinessChange = (happiness) => {
+    this.setState({ happiness });
   }
 
-  renderButton = () => {
+  onActivinessChange = activiness => {
+    this.setState({ activiness });
+  }
+
+  renderButton = (updateRecord) => {
     if (this.state.disabled) {
       return (
         <Button
@@ -77,90 +92,106 @@ export default class JournalDetailScreen extends React.Component {
       <Button
         block
         success
-        onPress={this.onSaveButtonPress}
+        onPress={
+          () => {
+            this.toggleEditable();
+            updateRecord(
+              this.journalItem.id,
+              this.state.happiness,
+              this.state.activiness,
+              this.state.note
+            );
+          }
+        }
       >
         <Text>SAVE</Text>
       </Button>
     );
   }
-
-
+  
+  
   render () {
     // set default values to 0 or '--'
     const disabled = this.state.disabled;
     const {
       exercise = 0,
-      happiness = 0,
-      activiness = 0,
-      steps = 0
+      steps = 0,
+      note='--'
     } = this.journalItem;
-    const note = this.journalItem.note || '--';
-    const date = formatDate(this.journalItem.date) || '--';
+
+    const date = presentDate(this.journalItem.date) || '--';
 
     return (
-      <Container style={{ flex: 1 }}>
-        <Header>
-          <Left>
-            <Button transparent onPress={() => this.navigation.goBack()}>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>{date}</Title>
-          </Body>
-        </Header>
-        <Content style={styles.mainContainer}>
-          <Form>
-            <View style={styles.itemContainer}>
-              <ExerciseItem
-                steps={steps}
-                exercise={exercise}
-              />
+      <RecordsContext.Consumer>
+        {({ updateRecord }) => 
+          <Container style={{ flex: 1 }}>
+          <Header>
+            <Left>
+              <Button transparent onPress={() => this.navigation.goBack()}>
+                <Icon name="arrow-back" />
+              </Button>
+            </Left>
+            <Body>
+              <Title>{date}</Title>
+            </Body>
+          </Header>
+          <Content style={styles.mainContainer}>
+            <Form>
+              <View style={styles.itemContainer}>
+                <ExerciseItem
+                  steps={steps}
+                  exercise={exercise}
+                />
+              </View>
+              <View style={styles.itemContainer}>
+                <CustomSlider
+                  text="Happiness"
+                  minText="Sad"
+                  maxText="Happy"
+                  value={this.state.happiness}
+                  minValue={1}
+                  maxValue={5}
+                  infoText="Happiness is being happy."
+                  disabled={disabled}
+                  onValueChange={this.onHappinessChange}
+                />
+              </View>
+  
+              <View style={styles.itemContainer}>
+                <CustomSlider
+                  text="Activiness"
+                  minText="Passive"
+                  maxText="Active"
+                  value={this.state.activiness}
+                  minValue={1}
+                  maxValue={5}
+                  infoText="Activiness describes how active you felt during the day."
+                  disabled={disabled}
+                  onValueChange={this.onActivinessChange}
+                />
+              </View>
+  
+              <H3 style={styles.itemContainer}>Describe your day in words:</H3>
+              <View style={styles.itemContainer}>
+                <Textarea
+                  style={{ alignSelf: 'stretch' }}
+                  rowSpan={4}
+                  bordered
+                  placeholder={note}
+                  disabled={disabled}
+                  onChangeText={(text) => this.setState({ note: text })}
+                />
+              </View>
+  
+            </Form>
+            <View style={[styles.itemContainer, styles.bottomItem]}>
+              {this.renderButton(updateRecord)}
             </View>
-            <View style={styles.itemContainer}>
-              <CustomSlider
-                text="Happiness"
-                minText="Sad"
-                maxText="Happy"
-                value={happiness}
-                minValue={1}
-                maxValue={5}
-                infoText="Happiness is being happy."
-                disabled={disabled}
-              />
-            </View>
+          </Content>
+        </Container>
+        }
+      </RecordsContext.Consumer>
 
-            <View style={styles.itemContainer}>
-              <CustomSlider
-                text="Activiness"
-                minText="Passive"
-                maxText="Active"
-                value={activiness}
-                minValue={1}
-                maxValue={5}
-                infoText="Activiness describes how active you felt during the day."
-                disabled={disabled}
-              />
-            </View>
-
-            <H3 style={styles.itemContainer}>Describe your day in words:</H3>
-            <View style={styles.itemContainer}>
-              <Textarea
-                style={{ alignSelf: 'stretch' }}
-                rowSpan={4}
-                bordered
-                placeholder={note}
-                disabled={disabled}
-              />
-            </View>
-
-          </Form>
-          <View style={[styles.itemContainer, styles.bottomItem]}>
-            {this.renderButton()}
-          </View>
-        </Content>
-
-      </Container>
     );
   }
 }
@@ -182,3 +213,6 @@ const styles = StyleSheet.create({
     marginBottom: 20
   }
 });
+
+
+export default withNavigation(JournalDetailScreen);

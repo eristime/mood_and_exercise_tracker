@@ -1,3 +1,4 @@
 {
-  "eslint.options": { "configFile": ".eslintrc.json" }
+  "eslint.options": { "configFile": ".eslintrc.json" },
+  "eslint.nodePath": "node_modules"
 }

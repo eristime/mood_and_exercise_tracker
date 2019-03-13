@@ -8,7 +8,7 @@ import { Platform, StatusBar, StyleSheet, View, ToastAndroid } from 'react-nativ
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleProvider } from 'native-base';
-import AppContainer from './containers/AppContainer';
+import { AppContainer } from './containers/AppContainer';
 import getTheme from './native-base-theme/components';
 import appTheme from './native-base-theme/variables/mood_and_exercise_tracker_theme';
 

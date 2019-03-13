@@ -55,11 +55,11 @@ export default class HomeScreen extends React.Component {
           </Tabs>
           <ChartOption
             text="Exercise"
-            color="blue"
+            color="#5FAD56"
             infoText="This is exercise. It's though"
           />
-          <ChartOption text="Activity" color="green" />
-          <ChartOption text="Happiness" color="red" />
+          <ChartOption text="Activity" color="#F78154" />
+          <ChartOption text="Happiness" color="#F2C14E" />
           <View style={{ height: 100 }} />
         </Content>
         <Fab />
