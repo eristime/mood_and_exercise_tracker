@@ -1,5 +1,4 @@
 - plot charts
-- add texts
 - save reminders to db
 - save moods to db
 - structure to src

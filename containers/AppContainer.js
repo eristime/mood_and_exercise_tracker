@@ -9,20 +9,25 @@ export class AppContainer extends React.Component {
   /*
   Contains application global state and loads it from local db and pedometer.
   */
+
+
   state = {
     isPedometerAvailable: 'checking',
     records: [],
     loading: true,
-    updateRecord: this.updateRecord
-  };
+    //updateRecord: this.updateRecord
+
+  }
+
 
   async componentDidMount() {
     /* 
     Loads steps from pedometers and application state from deviceStorage 
     */
     //await deviceStorage.removeRecords();
-    const records = await deviceStorage.loadRecords();
-    this.setState({ records });
+    //const records = await deviceStorage.loadRecords();
+    //this.setState({ records });
+    //this.setState({ records: dummyData });
     await this.storeStepsFromPedometer();
 
     const newrecords = await deviceStorage.loadRecords();
@@ -33,15 +38,17 @@ export class AppContainer extends React.Component {
   }
 
 
-  recordForTodayExists = (records) => {
+  recordForTodayExists = (records, date) => {
     if (!records || records.length === 0) {
       return false
     }
-    
+
     let recordExists = false;
     records.forEach(record => {
-
-      if ( dateIsToday(new Date(record.date)) ) {
+      //console.log('record', record);
+      //console.log('date inrecordfor today exist', date);
+      //console.log('record date', new Date(record.date).toDateString());
+      if ( date.toDateString() === new Date(record.date).toDateString() ) {
         recordExists = true;
       }
 
@@ -49,19 +56,19 @@ export class AppContainer extends React.Component {
     return recordExists;
   };
 
-  addRecord = async (steps=null, happiness=null, activiness=null, note=null) => {
+  addRecord = async (date=new Date(), steps=null, happiness=null, activiness=null, note=null) => {
     /* Checks if a record for today exists:
       If a record is found, its values are modified.
       Otherwisee a new record is created.
     */
-    console.log('this.recordForTodayExists(this.state.records)', this.recordForTodayExists(this.state.records));
-    if (!this.recordForTodayExists(this.state.records)){
+    //console.log('this.recordForTodayExists(this.state.records)', this.recordForTodayExists(this.state.records, date));
+    if (!this.recordForTodayExists(this.state.records, date=date)){
       const newRecord = {
         steps: steps,
         happiness: happiness,
         activiness: activiness,
         note: note,
-        date: formatDate(new Date()),
+        date: formatDate(date),
       };
   
       if (steps) {
@@ -128,17 +135,26 @@ export class AppContainer extends React.Component {
       }
     );
 
-    // get today's step count and save it to db
-    const start = new Date();
-    start.setHours(0,0,0,0);
 
-    const end = new Date();
-    end.setHours(23,59,59,999);
-    
-    const stepCount = await Pedometer.getStepCountAsync(start, end)
+    // get stepcount for every day for last week
+    for (let i = 0; i < 7; i++){
+
+      const start = new Date();
+      start.setDate((new Date()).getDate() - i)
+      start.setHours(0,0,0,0);
+  
+      const end = new Date();
+      end.setDate((new Date()).getDate() - i)
+      end.setHours(23,59,59,999);
+
+      console.log('start', start);
+      console.log('end', end);
+      const stepCount = await Pedometer.getStepCountAsync(start, end)
       .catch( e => console.log("Could not get stepCount: " + e) );
-    console.log('stepcount', stepCount);
-    await this.addRecord(steps=stepCount.steps);
+      console.log('stepcount', stepCount);
+      await this.addRecord(date=start, steps=stepCount.steps);
+    }
+
   };
 
 
@@ -152,3 +168,12 @@ export class AppContainer extends React.Component {
     );
   }
 }
+
+const dummyData = [{
+  exercise: 2,
+  date: '2019-03-08'
+},
+{
+  exercise: 7.7,
+  date: '2019-03-07'
+}]

@@ -12,7 +12,6 @@ import {
   H2,
   Icon
 } from 'native-base';
-import { withNavigation } from 'react-navigation';
 import {
   VictoryLine,
   VictoryChart,
@@ -22,63 +21,60 @@ import {
   VictoryAxisdependentAxis
 } from 'victory-native';
 import { VictoryTheme } from 'victory-core';
-import { Svg } from 'expo';
 
-export default class BarChart extends React.Component{
-  
-  constructor() {
-    super();
-    this.state = {
-      zoomDomain: { x: [new Date(2019, 3, 1), new Date(2019, 3, 10)] }
-    };
-  }
 
-  handleZoom(domain) {
-    this.setState({ zoomDomain: domain });
-  }
-  render(){
-    return (
-      <View style={{ flex: 1 }}>
-        <View style={styles.titleContainer}>
-          <Icon name="arrow-dropleft" />
-          <H2>{this.props.title}</H2>
-          <Icon name="arrow-dropright" />
-        </View>
-  
+export default class BarChart extends React.Component {
+
+
+  renderChart = () => {
+    /*
+    Render lines if data is available.
+    */
+    const exerciseData = this.props.exerciseData
+    const happinessData = this.props.happinessData
+    const activinessData = this.props.activinessData
+
+    let exerciseChart = !(exerciseData && exerciseData.length !== 0) ? null:
+      <VictoryLine
+        data={exerciseData}
+        style={{
+          data: {
+            stroke: "#5FAD56", strokeWidth: "2"
+          }
+        }}
+      />;
+
+      let happinessChart = !(happinessData && happinessData.length !== 0) ? null:
+      <VictoryLine
+        data={happinessData}
+        style={{
+          data: {
+            stroke: "#F2C14E", strokeWidth: "2"
+          }
+        }}
+      />;
+
+      let activinessChart = !(activinessData && activinessData.length !== 0) ? null:
+      <VictoryLine
+        data={activinessData}
+        style={{
+          data: {
+            stroke: "#F78154", strokeWidth: "2"
+          }
+        }}
+      />;
+
+    if (true) {
+      return (
         <VictoryChart
           theme={VictoryTheme.material}
           domainPadding={5}
           interpolation="cardinal"
           scale={{ x: "time" }}
-          //containerComponent={
-          //  <VictoryZoomContainer
-          //    zoomDimension="x"
-          //    zoomDomain={this.state.zoomDomain}
-          //    //onZoomDomainChange={this.handleZoom.bind(this)}
-          //  />
-          //}
+          domain={{x: [new Date('2019-04-01'), new Date('2019-04-30')], y: [0, 10]}}
         >
           <VictoryGroup>
-            {/*
-          <Svg width={400} height={400}>
-            
-            <VictoryAxis
-              scale="time"
-              standalone={false}
-              //style={styles.axisYears}
-              tickValues={[
-                new Date('2019-03-11'),
-                new Date('2019-03-10'),
-                new Date('2019-03-09'),
-                new Date('2019-03-08'),
-                new Date('2019-03-07'),
-                new Date('2019-03-06'),
-                new Date('2019-03-05')
-              ]}
-              tickFormat={x => x.toLocaleString()}
-          />
-              </Svg>
-                
+            {/*   
                     
           <VictoryAxisdependentAxis
                 domain={[0, 5]}
@@ -88,38 +84,29 @@ export default class BarChart extends React.Component{
             />
              */}
          
-            
-     
-            <VictoryLine
-              data={this.props.exerciseData}
-              style={{
-                data: {
-                  stroke: "#5FAD56", strokeWidth: "2"
-                }
-              }}
-            />
-
-            <VictoryLine
-              data={this.props.activinessData}
-              style={{
-                data: {
-                  stroke: "#F78154", strokeWidth: "2"
-                }
-              }
-            }
-            />
-            <VictoryLine
-              data={this.props.happinessData}
-              style={{
-                data: {
-                  stroke: "#F2C14E", strokeWidth: "2"
-                }
-              }}
-            />
-
+            {exerciseChart}
+            {happinessChart}
+            {activinessChart}
 
           </VictoryGroup>
         </VictoryChart>
+      );
+    }
+
+  }
+
+  render () {
+
+    const e = this.props.exerciseData[0];
+    return (
+      <View style={{ flex: 1 }}>
+        <View style={styles.titleContainer}>
+          <Icon name="arrow-dropleft" />
+          <H2>{this.props.title}</H2>
+          <Icon name="arrow-dropright" />
+        </View>
+        { this.renderChart() }
+        
       </View>
   
     );
@@ -137,13 +124,11 @@ const styles = StyleSheet.create({
   }
 });
 
-//export default withNavigation(BarChart);
-const TICKVALUES = [
-  new Date('2019-03-11'),
-  new Date('2019-03-10'),
-  new Date('2019-03-09'),
-  new Date('2019-03-08'),
-  new Date('2019-03-07'),
-  new Date('2019-03-06'),
-  new Date('2019-03-05')
-]
+const dummyData = [{
+  y: 2,
+  x: new Date('2019-04-08')
+},
+{
+  y: 7.7,
+  x: new Date('2019-04-07')
+}]

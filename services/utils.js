@@ -51,6 +51,8 @@ export const dateIsToday = (dateObject) => {
   return false;
 };
 
+
+
 export const formatDate = (dateObject) => {
   /*
   param:date, JS date object
