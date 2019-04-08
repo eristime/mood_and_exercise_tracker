@@ -8,6 +8,7 @@ import RecordsContext from '../contexts/RecordsContext';
 export class AppContainer extends React.Component {
   /*
   Contains application global state and loads it from local db and pedometer.
+  Contains also methods to modify global state.
   */
 
 
@@ -15,8 +16,6 @@ export class AppContainer extends React.Component {
     isPedometerAvailable: 'checking',
     records: [],
     loading: true,
-    //updateRecord: this.updateRecord
-
   }
 
 
@@ -25,8 +24,8 @@ export class AppContainer extends React.Component {
     Loads steps from pedometers and application state from deviceStorage 
     */
     //await deviceStorage.removeRecords();
-    //const records = await deviceStorage.loadRecords();
-    //this.setState({ records });
+    const records = await deviceStorage.loadRecords();
+    this.setState({ records });
     //this.setState({ records: dummyData });
     await this.storeStepsFromPedometer();
 
@@ -45,9 +44,7 @@ export class AppContainer extends React.Component {
 
     let recordExists = false;
     records.forEach(record => {
-      //console.log('record', record);
-      //console.log('date inrecordfor today exist', date);
-      //console.log('record date', new Date(record.date).toDateString());
+
       if ( date.toDateString() === new Date(record.date).toDateString() ) {
         recordExists = true;
       }
@@ -59,11 +56,13 @@ export class AppContainer extends React.Component {
   addRecord = async (date=new Date(), steps=null, happiness=null, activiness=null, note=null) => {
     /* Checks if a record for today exists:
       If a record is found, its values are modified.
-      Otherwisee a new record is created.
+      Otherwise a new record is created.
     */
-    //console.log('this.recordForTodayExists(this.state.records)', this.recordForTodayExists(this.state.records, date));
+  
     if (!this.recordForTodayExists(this.state.records, date=date)){
+      // use utc time plus steps as id
       const newRecord = {
+        id: parseInt(date.getTime() + Number(steps).toString()),
         steps: steps,
         happiness: happiness,
         activiness: activiness,
@@ -147,11 +146,9 @@ export class AppContainer extends React.Component {
       end.setDate((new Date()).getDate() - i)
       end.setHours(23,59,59,999);
 
-      console.log('start', start);
-      console.log('end', end);
       const stepCount = await Pedometer.getStepCountAsync(start, end)
       .catch( e => console.log("Could not get stepCount: " + e) );
-      console.log('stepcount', stepCount);
+      //console.log('stepcount', stepCount, start);
       await this.addRecord(date=start, steps=stepCount.steps);
     }
 

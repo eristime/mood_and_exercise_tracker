@@ -33,7 +33,7 @@ export default class BarChartContainer extends React.Component {
         }
       }
     })
-    
+
     // repeat first object since victorgraph doesn't allow only one value
     if (l.length === 1) {
       l.push(l[0]);
@@ -47,7 +47,6 @@ export default class BarChartContainer extends React.Component {
     return (
       <RecordsContext.Consumer>
         {({ records }) => {
-          console.log('records', records);
           const exerciseData = this.getData(records, 'exercise');
           const happinessData = this.getData(records, 'happiness');
           const activinessData = this.getData(records, 'activiness');
@@ -57,9 +56,8 @@ export default class BarChartContainer extends React.Component {
             activinessData={activinessData}
             title="This week"
           />
-      
         }
-          
+
         }
       </RecordsContext.Consumer>
 
