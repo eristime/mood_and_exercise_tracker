@@ -1,4 +1,3 @@
-- plot charts
 - save reminders to db
 - save moods to db
 - structure to src

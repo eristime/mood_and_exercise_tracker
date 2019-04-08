@@ -58,8 +58,16 @@ export default class HomeScreen extends React.Component {
             color="#5FAD56"
             infoText="This is exercise. It's though"
           />
-          <ChartOption text="Activity" color="#F78154" />
-          <ChartOption text="Happiness" color="#F2C14E" />
+          <ChartOption
+            text="Activiness"
+            color="#F78154"
+            infoText="Activiness describes how active you felt during the day."
+          />
+          <ChartOption
+            text="Happiness"
+            color="#F2C14E"
+            infoText="Happiness is being happy."
+          />
           <View style={{ height: 100 }} />
         </Content>
         <Fab />
@@ -68,14 +76,3 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  fabButton: {
-    position: 'absolute',
-  },
-  actionButtonIcon: {
-    fontSize: 20,
-    height: 30,
-    color: 'white'
-  }
-});

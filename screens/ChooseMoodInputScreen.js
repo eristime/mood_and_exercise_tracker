@@ -23,6 +23,7 @@ import {
   H1,
   H3
 } from 'native-base';
+import RecordsContext from '../contexts/RecordsContext';
 
 export default class ChooseMoodInput extends React.Component {
 
@@ -37,42 +38,60 @@ export default class ChooseMoodInput extends React.Component {
   }
 
   render () {
-    return (
-      <Container style={{ flex: 1 }}>
-        <Header>
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Choose mood input</Title>
-          </Body>
-        </Header>
-        <Content style={styles.mainContainer}>
-          <View style={styles.textStyle}>
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={() => this.props.navigation.navigate('AddMood')}
-            >
-              <H3>Rate your mood manually.</H3>
-            </TouchableOpacity>
+    
+      return (
+        <Container style={{ flex: 1 }}>
+          <Header>
+            <Left>
+              <Button transparent onPress={() => this.props.navigation.goBack()}>
+                <Icon name="arrow-back" />
+              </Button>
+            </Left>
+            <Body>
+              <Title>Choose mood input</Title>
+            </Body>
+          </Header>
+          <RecordsContext.Consumer>
+            {({ records, getRecordForToday }) => {
 
-            <H1 style={styles.textStyle}>OR</H1>
-
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={() => this.props.navigation.navigate('AddCameraMood')}
-            >
-              <H3>Rate your mood by taking a picture. Google Vision will detect how your feeling today.</H3>
-            </TouchableOpacity>
-          </View>
-        </Content>
-
-      </Container>
-    );
+              const todaysRecord = getRecordForToday(records);
+              return (
+                <Content style={styles.mainContainer}>
+                  <View style={styles.textStyle}>
+                    <TouchableOpacity
+                      style={styles.buttonStyle}
+                      onPress={
+                        () => {
+                          this.props.navigation.navigate('JournalDetail',
+                        {
+                          journalItem: todaysRecord,
+                          navigation: this.props.navigation
+                        })}
+                      }
+                    >
+                      <H3>Rate your mood manually.</H3>
+                    </TouchableOpacity>
+        
+                    <H1 style={styles.textStyle}>OR</H1>
+        
+                    <TouchableOpacity
+                      style={styles.buttonStyle}
+                      onPress={() => this.props.navigation.navigate('AddCameraMood')}
+                    >
+                      <H3>Rate your mood by taking a picture. Google Vision will detect how your feeling today.</H3>
+                    </TouchableOpacity>
+                  </View>
+                </Content>
+              );
+            }}
+          </RecordsContext.Consumer>
+        </Container>
+      );
   }
+
 }
+
+
 
 const styles = StyleSheet.create({
   mainContainer: {

@@ -41,8 +41,8 @@ export const presentDate = (dateString) => {
 
 export const dateIsToday = (dateObject) => {
   /*
-  param:date, dateObject
-  returns true if dateObject is today, otherwise false
+  * @param:date, dateObject
+  * @returns true if dateObject is today, otherwise false
 
   */
   if (dateObject.toDateString() === (new Date()).toDateString()) {

@@ -5,6 +5,7 @@ import { stepsToKM, formatDate, dateIsToday } from '../services/utils';
 import deviceStorage from '../services/deviceStorage';
 import RecordsContext from '../contexts/RecordsContext';
 
+
 export class AppContainer extends React.Component {
   /*
   Contains application global state and loads it from local db and pedometer.
@@ -26,7 +27,7 @@ export class AppContainer extends React.Component {
     //await deviceStorage.removeRecords();
     const records = await deviceStorage.loadRecords();
     this.setState({ records });
-    //this.setState({ records: dummyData });
+
     await this.storeStepsFromPedometer();
 
     const newrecords = await deviceStorage.loadRecords();
@@ -115,6 +116,20 @@ export class AppContainer extends React.Component {
 
   };
 
+  /*
+  * A function to get a Record for today.
+  * @param {array} records - List of Records-objects
+  * @return {Record} - Todays record.
+  * @return {undefined} - If there is no record for today.
+  */
+  getRecordForToday = (records) => {
+  
+    const result = records.filter(record => dateIsToday(new Date(record.date)));
+
+
+    return result[0];
+  }
+
   storeStepsFromPedometer = async () => {
     /*
     Add todays step count to db
@@ -158,7 +173,11 @@ export class AppContainer extends React.Component {
   render() {
     return (
       <RecordsContext.Provider
-        value={{...this.state, updateRecord:this.updateRecord}}
+        value={{
+          ...this.state,
+          updateRecord: this.updateRecord,
+          getRecordForToday: this.getRecordForToday
+        }}
       >
         <AppNavigator />
       </RecordsContext.Provider>
