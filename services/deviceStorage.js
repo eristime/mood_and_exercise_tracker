@@ -34,7 +34,36 @@ const deviceStorage = {
     } catch (error) {
       console.log('AsyncStorage Error: ' + error.message);
     }
-  }
+  },
+
+  saveReminder: async (item) => {
+    try {
+      await AsyncStorage.setItem('reminder', JSON.stringify(item));
+      console.log('reminder saved to storage');
+    } catch (error) {
+      console.log('AsyncStorage Error: ' + error.message);
+    }
+  },
+
+  loadReminder: async () => {
+    try {
+      const retrievedItem = await AsyncStorage.getItem('reminder');
+      const result = retrievedItem ? JSON.parse(retrievedItem) : false;
+      return result;
+    } catch (error) {
+      console.log('AsyncStorage Error: ' + error.message);
+    }
+    return undefined;
+  },
+
+  removeReminder: async () => {
+    try {
+      await AsyncStorage.removeItem('reminder');
+      console.log('reminder removed');
+    } catch (error) {
+      console.log('AsyncStorage Error: ' + error.message);
+    }
+  },
 
 };
 

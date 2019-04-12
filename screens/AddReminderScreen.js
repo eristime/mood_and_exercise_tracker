@@ -32,7 +32,7 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { convertToHoursMinutes } from '../services/utils';
 import DefaultText from '../components/text/DefaultText';
-import Reminder from '../services/localDB';
+import deviceStorage from '../services/deviceStorage';
 
 export default class AddReminderScreen extends React.Component {
 
@@ -44,7 +44,9 @@ export default class AddReminderScreen extends React.Component {
     super(props)
     this.state = {
       isTimePickerVisible: false,
-      chosenTime: new Date()
+      chosenTime: new Date(),
+      previousReminder: false,
+      loading: true
     };
   }
 
@@ -58,7 +60,15 @@ export default class AddReminderScreen extends React.Component {
 
     Notifications.addListener(this.handleNotification);
 
-    // TODO: get previous notifications from db
+    // get previous notification from db
+    const reminder = await deviceStorage.loadReminder();
+    console.log('reminder componentdidmount', reminder);
+
+    if (reminder){
+      this.setState({chosenTime: new Date(reminder['chosenTime'])});
+      this.setState({previousReminder: true});
+    }
+    this.setState({loading: false})
   }
 
   _showTimePicker = () => this.setState({ isTimePickerVisible: true });
@@ -74,14 +84,14 @@ export default class AddReminderScreen extends React.Component {
   saveReminder = async () => {
     /* Cancel all previous notifications and add a new one. */
 
-    try {
-      await Notifications.cancelAllScheduledNotificationsAsync();
-    } catch (e) {
+
+    await Notifications.cancelAllScheduledNotificationsAsync()
+    .catch(e => {
       console.log(e);
       Alert.alert(
         'Removing previous notifications failed.'
       );
-    }
+    })
 
     const localNotification = {
       title: 'Mood and exercise tracker',
@@ -101,23 +111,98 @@ export default class AddReminderScreen extends React.Component {
     ));
     console.log('notIfication id', notificationId);
 
-    //Reminder.Addreminder(notificationId, this.state.chosenTime.toUTCString());
-    const reminder = await Reminder.getReminder(notificationId);
-    console.log('reminder from db', reminder);
+    
+    await deviceStorage.saveReminder({
+      id: notificationId, 
+      chosenTime: this.state.chosenTime.toUTCString()
+    });
+
+    const reminder = await deviceStorage.loadReminder();
+    console.log('id from db', reminder['id']);
+    console.log('reminder', reminder);
 
     // TODO: save notification id and time
     Alert.alert(
       'A reminder added',
       `You will now receive a reminder notification at ${convertToHoursMinutes(this.state.chosenTime)} everyday.`
     );
-    this.props.navigation.replace('ChangeReminder');
+    this.setState({previousReminder: true})
+    //this.props.navigation.replace('ChangeReminder');
   };
+
+  
+
+  deleteReminder = async () => {
+    await Notifications.cancelAllScheduledNotificationsAsync()
+    .catch((e) => {
+      Alert.alert(
+        'Removing previous notifications failed.',
+        e
+      );
+    });
+
+    await deviceStorage.removeReminder();
+    Alert.alert(
+      'Reminder removed',
+      'You will not recieve notification anymore.'
+    );
+
+    this.setState({ chosenTime: new Date() });
+    this.setState({ previousReminder: false });
+
+
+  };
+
 
   handleNotification = () => {
     this.props.navigation.replace('ChooseMoodInput');
-    console.warn('ok! got your notif');
+    console.log('OK, got your notification.');
   }
 
+
+  renderButton = () => {
+    // if reminder exists, show two buttons
+    if (this.state.loading){
+      return null;
+    }
+
+    if (this.state.previousReminder ) {
+      return (
+        <View style={[styles.itemContainer, styles.bottomItem, {
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-around'
+        }]}>
+          <Button
+            danger
+            onPress={this.deleteReminder}
+          >
+            <Text>DELETE</Text>
+          </Button>
+          <Button
+            success
+            onPress={this.saveReminder}
+          >
+            <Text>SAVE</Text>
+          </Button>
+    
+        </View>
+      );
+    } else {
+      return (
+        <View style={[styles.itemContainer, styles.bottomItem]}>
+          <Button
+            block
+            success
+            onPress={this.saveReminder}
+          >
+            <Text>SAVE</Text>
+          </Button>
+        </View>
+      );
+
+    }
+  }
 
   render () {
     return (
@@ -157,15 +242,7 @@ export default class AddReminderScreen extends React.Component {
             </View>
 
           </Form>
-          <View style={[styles.itemContainer, styles.bottomItem]}>
-          <Button
-            block
-            success
-            onPress={this.saveReminder}
-          >
-            <Text>SAVE</Text>
-          </Button>
-          </View>
+          { this.renderButton() }
         </Content>
 
       </Container>
