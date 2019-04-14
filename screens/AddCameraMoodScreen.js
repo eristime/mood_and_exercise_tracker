@@ -43,6 +43,7 @@ export default class AddCameraMoodScreen extends React.Component {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
 
+    // make a directory for the application
     const dir = await FileSystem
       .makeDirectoryAsync(PHOTOS_DIR)
       .catch(e => {
@@ -68,18 +69,23 @@ export default class AddCameraMoodScreen extends React.Component {
 
   handleMountError = ({ message }) => console.error(message);
 
+  /*
+  * Save the picture to filesystem and pass the url to the PhotoToGoogleVision- screen.
+  */
   onPictureSaved = async (photo) => {
+    
+    const photoFileName = `${Date.now()}.jpg`
     await FileSystem.moveAsync({
       from: photo.uri,
-      to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`
+      to: `${FileSystem.documentDirectory}photos/${photoFileName}`
     });
+   
+    //console.log('this.state.sphoto', this.state.photos)
+    
+    const fileName = `${PHOTOS_DIR}/${photoFileName}`;
+    
+    this.props.navigation.navigate('PhotoToGoogleVision', { uri: fileName });
 
-    if (this.state.photos) {
-      const file = this.state.photos[this.state.photos.length - 1];  // pick the latest photo
-      const fileName = `${PHOTOS_DIR}/${file}`;
-      
-      this.props.navigation.navigate('PhotoToGoogleVision', { uri: fileName });
-    }
   }
 
 

@@ -10,7 +10,7 @@ const deviceStorage = {
   saveRecords: async (item) => {
     try {
       await AsyncStorage.setItem('records', JSON.stringify(item));
-      console.log('item saved to storage');
+      // console.log('item saved to storage');
     } catch (error) {
       console.log('AsyncStorage Error: ' + error.message);
     }
@@ -30,7 +30,7 @@ const deviceStorage = {
   removeRecords: async () => {
     try {
       await AsyncStorage.removeItem('records');
-      console.log('item removed');
+      console.log('record removed');
     } catch (error) {
       console.log('AsyncStorage Error: ' + error.message);
     }
