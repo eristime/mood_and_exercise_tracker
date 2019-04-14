@@ -106,3 +106,27 @@ export const stepsToKM = steps => {
   */
   return Number((steps * 0.66) / 1000).toFixed(3) || 0;
 };
+
+/*
+* Order records from latest to oldest.
+*/
+export const orderRecords = records => {
+
+  const compare = (a, b) => {
+
+    const A = new Date(a['date']);
+    const B = new Date(b['date']);
+
+    let comparison = 0;
+    if (A > B) {
+      comparison = -1;
+    } else if (A < B) {
+      comparison = 1;
+    }
+
+    return comparison;
+  }
+  const result = [...records].sort(compare);
+
+  return result;
+};

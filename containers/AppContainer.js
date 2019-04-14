@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pedometer } from 'expo';
 import AppNavigator from '../navigation/AppNavigator';
-import { stepsToKM, formatDate, dateIsToday } from '../services/utils';
+import { stepsToKM, formatDate, dateIsToday, orderRecords } from '../services/utils';
 import deviceStorage from '../services/deviceStorage';
 import RecordsContext from '../contexts/RecordsContext';
 
@@ -26,14 +26,15 @@ export class AppContainer extends React.Component {
     */
     //await deviceStorage.removeRecords();
     const records = await deviceStorage.loadRecords();
-    this.setState({ records });
+    this.setState({ records: orderRecords(records) });
 
     await this.storeStepsFromPedometer();
 
     const newrecords = await deviceStorage.loadRecords();
 
     console.log('async app state', newrecords);
-    this.setState({ records: newrecords });
+    console.log('ordered', orderRecords(newrecords));
+    this.setState({ records: orderRecords(newrecords) });
     this.setState({ loading: false });
   }
 
