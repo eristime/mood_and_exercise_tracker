@@ -1,8 +1,4 @@
-- save reminders to db
-- save moods to db
-- structure to src
-- Google vision
-- better passing of consumers to JournalItem
+- connect adding mood to Google vision
+- tests
 - time for redux already?
 - loading screens
-- tests

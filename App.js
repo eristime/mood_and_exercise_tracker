@@ -4,11 +4,11 @@
 /* eslint-disable semi */
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, ToastAndroid } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleProvider } from 'native-base';
-import { AppContainer } from './containers/AppContainer';
+import { AppContainer } from './src/containers/AppContainer';
 import getTheme from './native-base-theme/components';
 import appTheme from './native-base-theme/variables/mood_and_exercise_tracker_theme';
 
