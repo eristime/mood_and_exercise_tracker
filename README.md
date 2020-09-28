@@ -4,6 +4,8 @@ This app investigates how exercise affects your day by getting the daily exercis
 
 This is also course work Mobile Computing-course at University of Oulu.
 
+See a demo [here](https://www.youtube.com/watch?v=Y-SA3s0mcR8&ab_channel=EemeliRistimella).
+
 
 ## How to run
 
